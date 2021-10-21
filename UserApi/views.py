@@ -23,7 +23,8 @@ def login(request):
         body = {
             "email": getattr(user, "email"),
             "name": getattr(user, "name"),
-            "user_id": str(getattr(user, "user_id"))
+            "user_id": str(getattr(user, "user_id")),
+            "phone": getattr(user, "phone")
         }
     else:
         message = "Incorrect Credentials"
