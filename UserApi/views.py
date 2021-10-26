@@ -7,6 +7,7 @@ from rest_framework import generics, serializers
 from UserApi.models import User, UserVerification
 from UserApi.send_otp import send_otp
 
+from UserApi.encode import encode
 
 # Create your views here.
 
@@ -20,10 +21,11 @@ def login(request):
         message = "Logged In Successfully..."
         success = True
         user = User.objects.get(email=email)
+        id = encode(str(getattr(user, "user_id")))
         body = {
             "email": getattr(user, "email"),
             "name": getattr(user, "name"),
-            "user_id": str(getattr(user, "user_id")),
+            "user_id": id,
             "phone": getattr(user, "phone")
         }
     else:
@@ -40,7 +42,8 @@ def SignUp(request):
     password = request.data['password']
     new_user = User(email=email, password=password, name=name)
     new_user.save(force_update=True)
-    return (Response({"success": True, "message": "Account Created!", "user_id": str(getattr(new_user, "user_id"))}))
+    id = encode(str(getattr(new_user, "user_id")))
+    return (Response({"success": True, "message": "Account Created!", "user_id": id}))
 
 
 @api_view(['GET'])
