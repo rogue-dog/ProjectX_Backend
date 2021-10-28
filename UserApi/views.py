@@ -49,7 +49,7 @@ def SignUp(request):
     password = request.data['password']
     new_user = User(email=email, password=password, name=name)
     new_user.save(force_update=True)
-    id = encode(str(getattr(new_user, "user_id")))
+    id = str(getattr(new_user, "user_id"))
     return (Response({"success": True, "message": "Account Created!", "user_id": id}))
 
 
