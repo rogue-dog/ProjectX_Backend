@@ -74,7 +74,7 @@ def OTPCheck(req):
 
 class FacultyView(generics.ListCreateAPIView):
     queryset = Faculty.objects.all()
-    serializers = FacultySerializers
+    serializer_class = FacultySerializers
 
     def get(self, request, *args, **kwargs):
         user_id=request.headers['user_id']
