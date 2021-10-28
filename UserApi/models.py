@@ -29,3 +29,4 @@ class Faculty(models.Model):
     faculty_ratings =models.CharField(max_length=20)
     faculty_category = models.CharField(max_length=240)
     faculty_online = models.BooleanField(default=True)
+    faculty_image = models.FileField()
