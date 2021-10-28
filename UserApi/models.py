@@ -19,3 +19,13 @@ class User(models.Model):
 class UserVerification(models.Model):
     email = models.CharField(max_length=250, primary_key=True)
     otp = models.CharField(max_length=4)
+
+class Faculty(models.Model):
+    faculty_name = models.CharField(max_length=250)
+    faculy_speciality = models.CharField(max_length=250)
+    faculty_id = models.UUIDField(default=uuid.uuid5,primary_key=True)
+    faculty_call_charges = models.IntegerField()
+    
+    faculty_ratings =models.IntegerField()
+    faculty_category = models.CharField(max_length=240)
+    faculty_online = models.BooleanField(default=True)

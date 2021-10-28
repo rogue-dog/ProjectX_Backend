@@ -1,13 +1,17 @@
+from django.db import models
+from django.db.models import query
 from django.http import response
 from django.shortcuts import render
 import rest_framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics, serializers
-from UserApi.models import User, UserVerification
+from UserApi.models import Faculty, User, UserVerification
 from UserApi.send_otp import send_otp
 
-from UserApi.encode import encode
+
+from UserApi.encode import decode, encode
+from UserApi.serializers import FacultySerializers
 
 # Create your views here.
 
@@ -16,18 +20,21 @@ from UserApi.encode import encode
 def login(request):
     email = request.headers['email']
     password = request.headers['password']
+    
     body = {"": ""}
-    if(User.objects.filter(email=email, password=password).exists()):
+    if(User.objects.filter(email=email,password=password).exists()):
+        
+        
+
         message = "Logged In Successfully..."
         success = True
         user = User.objects.get(email=email)
-        id = encode(str(getattr(user, "user_id")))
         body = {
-            "email": getattr(user, "email"),
-            "name": getattr(user, "name"),
-            "user_id": id,
-            "phone": getattr(user, "phone")
-        }
+                "email": getattr(user, "email"),
+                "name": getattr(user, "name"),
+                "user_id": str(getattr(user, "user_id")),
+                "phone": getattr(user, "phone")
+            }
     else:
         message = "Incorrect Credentials"
         success = False
@@ -62,3 +69,22 @@ def OTPCheck(req):
         return(Response({"success": True, "message": "Email Verified"}))
     else:
         return(Response({"success": False, "message": "Incorrect OTP"}))
+
+
+
+class FacultyView(generics.ListCreateAPIView):
+    queryset = Faculty.objects.all()
+    serializers = FacultySerializers
+
+    def get(self, request, *args, **kwargs):
+        user_id=request.headers['user_id']
+        if(User.objects.filter(user_id=user_id).exists()):
+        
+            return super().get(request, *args, **kwargs)
+        else :
+            return(Response({"message" : "User Inauthorized"}))
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+     
