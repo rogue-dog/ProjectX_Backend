@@ -23,7 +23,7 @@ class UserVerification(models.Model):
 class Faculty(models.Model):
     faculty_name = models.CharField(max_length=250)
     faculty_speciality = models.CharField(max_length=250)
-    faculty_id = models.UUIDField(default=uuid.uuid5,primary_key=True)
+    faculty_id = models.UUIDField(default=uuid.uuid4,primary_key=True)
     faculty_call_charges = models.CharField(max_length=20)
     
     faculty_ratings =models.CharField(max_length=20)
