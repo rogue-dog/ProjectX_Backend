@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework import generics, serializers
 from UserApi.models import Faculty, User, UserVerification
 from UserApi.send_otp import send_otp
-
+from UserApi.dummy_data import dummy_data
+ 
 
 from UserApi.encode import decode, encode
 from UserApi.serializers import FacultySerializers
@@ -80,9 +81,11 @@ class FacultyView(generics.ListCreateAPIView):
         user_id=request.headers['user_id']
         if(User.objects.filter(user_id=user_id).exists()):
         
-            return super().get(request, *args, **kwargs)
+            return(Response(dummy_data))
         else :
             return(Response({"message" : "User Inauthorized"}))
+
+
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
