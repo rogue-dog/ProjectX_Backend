@@ -26,4 +26,6 @@ urlpatterns = [
     path('check/otp', views.OTPCheck),
     path('faculty/',views.FacultyView.as_view()),
     path('get/reviews',views.get_reviews),
+    path('get/wallet',views.get_wallet),
+    path('add/wallet',views.add_to_wallet)
 ]

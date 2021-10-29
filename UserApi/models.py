@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import DefaultDict
 from django.db import models
 from django.db.models.expressions import Value
 from django.core.validators import validate_comma_separated_integer_list
@@ -30,3 +31,9 @@ class Faculty(models.Model):
     faculty_category = models.CharField(max_length=240)
     faculty_online = models.BooleanField(default=True)
     
+
+class Wallet(models.Model):
+    user_id = models.CharField(max_length=250, unique=True)
+    wallet_id = models.UUIDField(default=uuid.uuid4(),primary_key=True)
+    amount = models.IntegerField(default=0)
+    transactions=models.JSONField(default = dict)

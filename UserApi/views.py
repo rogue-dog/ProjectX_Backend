@@ -6,7 +6,7 @@ import rest_framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics, serializers
-from UserApi.models import Faculty, User, UserVerification
+from UserApi.models import Faculty, User, UserVerification, Wallet
 from UserApi.send_otp import send_otp
 from UserApi.dummy_data import dummy_data,dummy_reviews
  
@@ -94,3 +94,42 @@ class FacultyView(generics.ListCreateAPIView):
 @api_view(['GET'])
 def get_reviews(request) :
     return(Response(dummy_reviews))
+
+@api_view(['GET'])
+def get_wallet(request) :
+    user_id= request.headers['user-id']
+    if(User.objects.filter(user_id=user_id).exists()):
+        wallet,_ = Wallet.objects.get_or_create(user_id=user_id)
+        wallet_data = {
+            'wallet' :{
+                "user_id" : getattr(wallet,"user_id"),
+                "wallet_id" : getattr(wallet,"wallet_id"),
+                "amount" :getattr(wallet,"amount"),
+                "transactions" : getattr(wallet,"transactions")
+            }
+        }
+
+        return(Response(wallet_data))
+    return(Response({"message" : "Invalid Data"}))
+
+
+
+@api_view(['GET'])
+def add_to_wallet(request) :
+    user_id= request.headers['user-id']
+    added_amount = request.headers['added-amount']
+    if(Wallet.objects.filter(user_id=user_id).exists()):
+        wallet=Wallet.objects.filter(user_id=user_id)[0]
+        org_amount = wallet.amount
+        Wallet.objects.filter(user_id=user_id).update(amount=org_amount+int(added_amount))
+        wallet=Wallet.objects.filter(user_id=user_id)[0]
+        wallet_data = {
+            'wallet' :{
+                "user_id" : getattr(wallet,"user_id"),
+                "wallet_id" : getattr(wallet,"wallet_id"),
+                "amount" :getattr(wallet,"amount"),
+                "transactions" : getattr(wallet,"transactions")
+            }
+        }
+        return(Response(wallet_data))
+    return(Response({"message" : "No Such User Exist"}))
