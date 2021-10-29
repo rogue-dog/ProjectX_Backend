@@ -25,4 +25,5 @@ urlpatterns = [
     path('check/email', views.EmailVerification),
     path('check/otp', views.OTPCheck),
     path('faculty/',views.FacultyView.as_view()),
+    path('get/reviews',views.get_reviews),
 ]

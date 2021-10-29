@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import generics, serializers
 from UserApi.models import Faculty, User, UserVerification
 from UserApi.send_otp import send_otp
-from UserApi.dummy_data import dummy_data
+from UserApi.dummy_data import dummy_data,dummy_reviews
  
 
 from UserApi.encode import decode, encode
@@ -91,3 +91,6 @@ class FacultyView(generics.ListCreateAPIView):
 
 
      
+@api_view(['GET'])
+def get_reviews(request) :
+    return(Response(dummy_reviews))

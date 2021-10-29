@@ -36,3 +36,32 @@ dummy_data = {
         
     ]
 }
+
+
+
+
+dummy_reviews = {
+    "faculty_id" : 2301221,
+    "reviews" : [{
+        "user_id" : 23344,
+        "user_name" : "Rakesh",
+        "user_review" : "Professor really helped me a lot in my studies. Thank You!!",
+        "user_ratings": 4,
+        "user_image" : "https://thecinemaholic.com/wp-content/uploads/2021/03/0_iRU5IQ2KGkDyGzyw.jpg"
+        
+        
+        },
+        {
+        "user_id" : 23344,
+        "user_name" : "Rahul",
+        "user_review" : "Professor's way of explaining complicated concepts is really unique and helpful. Loved it!!!",
+        "user_ratings": 5,
+        "user_image" : "https://media.comicbook.com/2021/01/one-piece-wano-luffy-cosplay-1252700.jpeg"
+        
+        
+        },
+        
+        
+        ]
+    
+}
