@@ -97,7 +97,7 @@ def get_reviews(request) :
 
 @api_view(['GET'])
 def get_wallet(request) :
-    user_id= request.headers['user-id']
+    user_id= request.headers['user_id']
     if(User.objects.filter(user_id=user_id).exists()):
         wallet,_ = Wallet.objects.get_or_create(user_id=user_id)
         wallet_data = {
@@ -116,8 +116,8 @@ def get_wallet(request) :
 
 @api_view(['GET'])
 def add_to_wallet(request) :
-    user_id= request.headers['user-id']
-    added_amount = request.headers['added-amount']
+    user_id= request.headers['user_id']
+    added_amount = request.headers['added_amount']
     if(Wallet.objects.filter(user_id=user_id).exists()):
         wallet=Wallet.objects.filter(user_id=user_id)[0]
         org_amount = wallet.amount
